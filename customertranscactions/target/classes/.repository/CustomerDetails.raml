@@ -1,0 +1,44 @@
+#%RAML 0.8
+baseUri: https://mocksvc.mulesoft.com/mocks/74b04cc4-9a85-4efc-9103-16a4e42349a4
+title: customerDetails
+version: 1.0
+
+/CustomerDetails:
+  get:
+    queryParameters: 
+      
+
+    responses:
+     200:
+      body:
+        application/json:
+           example: |
+            [{"CustomerID":"1","FirstName":"HARIKRISHNA", "LastName":"SUNKARA", "AddressLine1":"BurlingtonRoad",
+               "AddressLine2":"HomeBush","City":"Sydney","State":"NSW","Country":"Australia","Modified DateTime":"07-09-2017 23:00:24","Postcode":2140}, {"CustomerID":"2","FirstName":"Mahesh", "LastName":"Palani", "AddressLine1":"BurlingtonRoad","AddressLine2":"HomeBush","City":"Sydney","        State":"NSW","Country":"Australia","ModifiedDateTime":"08-09-2017 23:00:24","Postcode":2130}, {"CustomerID":"3","FirstName":"Mule", "LastName":"Max", "AddressLine1":"BeresfordRoad","AddressLine2":"Strathfield","City":"Sydney","        State":"NSW","Country":"Australia","ModifiedDateTime":"09-09-2017 23:00:24","Postcode":2145}]
+/{CustomerID}:
+  get:
+    responses:
+     200:
+      body:
+        application/json:
+          example: |
+            [{"CustomerID":"1","FirstName":"HARIKRISHNA", "LastName":"SUNKARA", "AddressLine1":"BurlingtonRoad",
+               "AddressLine2":"HomeBush","City":"Sydney","State":"NSW","Country":"Australia","Modified DateTime":"07-09-2017 23:00:24","Postcode":2140}, {"CustomerID":"2","FirstName":"Mahesh", "LastName":"Palani", "AddressLine1":"BurlingtonRoad","AddressLine2":"HomeBush","City":"Sydney","        State":"NSW","Country":"Australia","ModifiedDateTime":"08-09-2017 23:00:24","Postcode":2130}, {"CustomerID":"3","FirstName":"Mule", "LastName":"Max", "AddressLine1":"BeresfordRoad","AddressLine2":"Strathfield","City":"Sydney","        State":"NSW","Country":"Australia","ModifiedDateTime":"09-09-2017 23:00:24","Postcode":2145}]
+/{Postcode}:
+  get:
+    responses:
+     200:
+      body:
+        application/json:
+          example: |
+            [{"CustomerID":"1","FirstName":"HARIKRISHNA", "LastName":"SUNKARA", "AddressLine1":"BurlingtonRoad",
+               "AddressLine2":"HomeBush","City":"Sydney","State":"NSW","Country":"Australia","Modified DateTime":"07-09-2017 23:00:24","Postcode":2140}, {"CustomerID":"2","FirstName":"Mahesh", "LastName":"Palani", "AddressLine1":"BurlingtonRoad","AddressLine2":"HomeBush","City":"Sydney","        State":"NSW","Country":"Australia","ModifiedDateTime":"08-09-2017 23:00:24","Postcode":2130}, {"CustomerID":"3","FirstName":"Mule", "LastName":"Max", "AddressLine1":"BeresfordRoad","AddressLine2":"Strathfield","City":"Sydney","        State":"NSW","Country":"Australia","ModifiedDateTime":"09-09-2017 23:00:24","Postcode":2145}]
+       
+       
+         
+        
+   
+    
+      
+    
+ 

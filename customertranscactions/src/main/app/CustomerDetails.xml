@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+    <http:listener-config name="CustomerDetails-httpListenerConfig" host="0.0.0.0" port="8085" doc:name="HTTP Listener Configuration"/>
+    <apikit:config name="CustomerDetails-config" raml="CustomerDetails.raml" consoleEnabled="false" doc:name="Router"/>
+    <flow name="CustomerDetails-main">
+        <http:listener config-ref="CustomerDetails-httpListenerConfig" path="/api/*" doc:name="HTTP"/>
+        <apikit:router config-ref="CustomerDetails-config" doc:name="APIkit Router"/>
+        <exception-strategy ref="CustomerDetails-apiKitGlobalExceptionMapping" doc:name="Reference Exception Strategy"/>
+    </flow>
+    <flow name="CustomerDetails-console">
+        <http:listener config-ref="CustomerDetails-httpListenerConfig" path="/console/*" doc:name="HTTP"/>
+        <apikit:console config-ref="CustomerDetails-config" doc:name="APIkit Console"/>
+    </flow>
+    <flow name="get:/CustomerDetails:CustomerDetails-config">
+        <flow-ref name="h2__databaseFlow" doc:name="h2__databaseFlow"/>
+
+    </flow>
+    <flow name="get:/{CustomerID}:CustomerDetails-config">
+        <set-payload value="[{&quot;CustomerID&quot;:&quot;1&quot;,&quot;FirstName&quot;:&quot;HARIKRISHNA&quot;, &quot;LastName&quot;:&quot;SUNKARA&quot;, &quot;AddressLine1&quot;:&quot;BurlingtonRoad&quot;,&#xA;   &quot;AddressLine2&quot;:&quot;HomeBush&quot;,&quot;City&quot;:&quot;Sydney&quot;,&quot;State&quot;:&quot;NSW&quot;,&quot;Country&quot;:&quot;Australia&quot;,&quot;Modified DateTime&quot;:&quot;07-09-2017 23:00:24&quot;,&quot;Postcode&quot;:2140}, {&quot;CustomerID&quot;:&quot;2&quot;,&quot;FirstName&quot;:&quot;Mahesh&quot;, &quot;LastName&quot;:&quot;Palani&quot;, &quot;AddressLine1&quot;:&quot;BurlingtonRoad&quot;,&quot;AddressLine2&quot;:&quot;HomeBush&quot;,&quot;City&quot;:&quot;Sydney&quot;,&quot;        State&quot;:&quot;NSW&quot;,&quot;Country&quot;:&quot;Australia&quot;,&quot;ModifiedDateTime&quot;:&quot;08-09-2017 23:00:24&quot;,&quot;Postcode&quot;:2130}, {&quot;CustomerID&quot;:&quot;3&quot;,&quot;FirstName&quot;:&quot;Mule&quot;, &quot;LastName&quot;:&quot;Max&quot;, &quot;AddressLine1&quot;:&quot;BeresfordRoad&quot;,&quot;AddressLine2&quot;:&quot;Strathfield&quot;,&quot;City&quot;:&quot;Sydney&quot;,&quot;        State&quot;:&quot;NSW&quot;,&quot;Country&quot;:&quot;Australia&quot;,&quot;ModifiedDateTime&quot;:&quot;09-09-2017 23:00:24&quot;,&quot;Postcode&quot;:2145}]" doc:name="Set Payload"/>
+    </flow>
+    <flow name="get:/{Postcode}:CustomerDetails-config">
+        <flow-ref name="h2__databaseFlow" doc:name="h2__databaseFlow"/>
+
+    </flow>
+    <apikit:mapping-exception-strategy name="CustomerDetails-apiKitGlobalExceptionMapping">
+        <apikit:mapping statusCode="404">
+            <apikit:exception value="org.mule.module.apikit.exception.NotFoundException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Resource not found&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="405">
+            <apikit:exception value="org.mule.module.apikit.exception.MethodNotAllowedException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Method not allowed&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="415">
+            <apikit:exception value="org.mule.module.apikit.exception.UnsupportedMediaTypeException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Unsupported media type&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="406">
+            <apikit:exception value="org.mule.module.apikit.exception.NotAcceptableException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Not acceptable&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="400">
+            <apikit:exception value="org.mule.module.apikit.exception.BadRequestException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Bad request&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+    </apikit:mapping-exception-strategy>
+</mule>
