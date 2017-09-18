@@ -14,7 +14,7 @@ public class DBInitialization implements InitializingBean {
 		Connection conn = null;
 		try {
 			Class.forName("org.h2.Driver").newInstance();
-			// Get a connection
+			// Get a connection on database
 			conn = DriverManager.getConnection(dbURL);
 			Statement stmt = conn.createStatement();
 			stmt.executeUpdate("CREATE TABLE CustomerDetails (FirstName VARCHAR(255),LastName VARCHAR(255),AddressLine1 VARCHAR(255),AddressLine2 VARCHAR(255),CITY VARCHAR(50),STATE VARCHAR(50),POSTCODE INTEGER)");
