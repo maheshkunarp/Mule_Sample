@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns:email="http://www.mulesoft.org/schema/mule/email" xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:email="http://www.mulesoft.org/schema/mule/email" xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd
-http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
     <http:listener-config name="CustomerDetails-httpListenerConfig" host="0.0.0.0" port="8085" doc:name="HTTP Listener Configuration"/>
     <apikit:config name="CustomerDetails-config" raml="CustomerDetails.raml" consoleEnabled="false" doc:name="Router"/>
     <cxf:configuration name="CXF_Configuration" enableMuleSoapHeaders="true" initializeStaticBusInstance="true" doc:name="CXF Configuration"/>
     <email:email-to-string-transformer name="Email_to_String" doc:name="Email to String"/>
+    <file:file-to-string-transformer name="File_to_String" doc:name="File to String"/>
     <flow name="CustomerDetails-main">
         <http:listener config-ref="CustomerDetails-httpListenerConfig" path="/api/*" doc:name="HTTP"/>
         <apikit:router config-ref="CustomerDetails-config" doc:name="APIkit Router"/>
